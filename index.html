@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference Library</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f9f7f4;
+      color: #2c2c2c;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 32px;
+    }
+
+    .playlist-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .playlist {
+      list-style: none;
+      border-top: 1px solid #e4e0db;
+    }
+
+    .playlist li {
+      border-bottom: 1px solid #e4e0db;
+    }
+
+    .playlist button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 13px 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #2c2c2c;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .playlist button:hover {
+      color: #0057b8;
+    }
+
+    .playlist button.active {
+      color: #0057b8;
+      font-style: italic;
+    }
+
+    .playlist button::before {
+      content: '▶  ';
+      font-size: 0.6rem;
+      opacity: 0.4;
+      vertical-align: middle;
+    }
+
+    .playlist button.active::before {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reference Library</h1>
+    <p class="description">
+      Select an entry below to begin playback.
+    </p>
+
+    <audio id="player" controls>
+      <source id="audio-source" src="files/matt-damon.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <p class="playlist-label">Entries</p>
+    <ul class="playlist" id="playlist">
+      <li>
+        <button class="active" data-src="files/matt-damon.mp3">
+          Matt Damon
+        </button>
+      </li>
+      <li>
+        <button data-src="files/mindy-kaling.mp3">
+          Mindy Kaling
+        </button>
+      </li>
+      <li>
+        <button data-src="files/harry-potter.mp3">
+          Harry Potter
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const source = document.getElementById('audio-source');
+    const buttons = document.querySelectorAll('.playlist button');
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        source.src = btn.dataset.src;
+        player.load();
+        player.play();
+      });
+    });
+  </script>
+</body>
+</html>
